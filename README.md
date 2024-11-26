@@ -74,4 +74,4 @@ database_setup/
 
 ### Support
 
-For questions or issues, please contact the owner through Upwork. 
+For questions or issues, please contact the owner through Fiver
