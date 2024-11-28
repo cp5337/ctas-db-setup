@@ -1,0 +1,191 @@
+{
+  "schema_version": "6.0",
+  "description": "CTAS Node Schema incorporating NIEM, N-DEx, and stateful sensitivity features with offloading optimizations.",
+  "nodes": [
+    {
+      "label": "Person",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier, aligned with N-DEx and NIEM standards"
+        },
+        "name": {
+          "type": "string",
+          "description": "Full name of the individual"
+        },
+        "role": {
+          "type": "string",
+          "description": "Operational role of the person (e.g., 'suspect', 'admin')"
+        },
+        "state": {
+          "type": "string",
+          "description": "Current state of the person (e.g., 'Active', 'Inactive', 'Monitored')"
+        },
+        "previous_state": {
+          "type": "string",
+          "description": "Previous recorded state"
+        },
+        "hash_id": {
+          "type": "string",
+          "description": "Murmur hash for efficient indexing"
+        },
+        "sensitivity_level": {
+          "type": "string",
+          "description": "Sensitivity level for access control (e.g., 'Public', 'Restricted')"
+        }
+      }
+    },
+    {
+      "label": "Object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the object, hashed"
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of object (e.g., 'Device', 'File', 'Asset')"
+        },
+        "state": {
+          "type": "string",
+          "description": "Current state of the object (e.g., 'Operational', 'Compromised')"
+        },
+        "last_updated": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of last state change"
+        },
+        "sensitivity_level": {
+          "type": "string",
+          "description": "Sensitivity level for access control"
+        }
+      }
+    },
+    {
+      "label": "Location",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the location, hashed"
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable name of the location"
+        },
+        "geo_coordinates": {
+          "type": "object",
+          "properties": {
+            "lat": { "type": "number" },
+            "lng": { "type": "number" }
+          },
+          "description": "Geographic coordinates"
+        },
+        "state": {
+          "type": "string",
+          "description": "Current operational state of the location"
+        }
+      }
+    },
+    {
+      "label": "Event",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the event"
+        },
+        "event_type": {
+          "type": "string",
+          "description": "Type of event (e.g., 'Cyberattack', 'Incident')"
+        },
+        "state": {
+          "type": "string",
+          "description": "Current status of the event (e.g., 'Investigating', 'Resolved')"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Event timestamp"
+        }
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "type": "LINKED_TO",
+      "properties": {
+        "context": {
+          "type": "string",
+          "description": "Context of the relationship (e.g., 'Associated', 'Collaborative')"
+        },
+        "sensitivity_level": {
+          "type": "string",
+          "description": "Sensitivity level for access control"
+        }
+      }
+    },
+    {
+      "type": "TARGETS",
+      "properties": {
+        "context": {
+          "type": "string",
+          "description": "Context of targeting (e.g., 'Primary', 'Secondary')"
+        },
+        "state": {
+          "type": "string",
+          "description": "State of the target relationship"
+        }
+      }
+    },
+    {
+      "type": "OCCURS_AT",
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of occurrence"
+        },
+        "confidence_level": {
+          "type": "string",
+          "description": "Confidence level in occurrence accuracy"
+        }
+      }
+    }
+  ],
+  "integration": {
+    "offloading": {
+      "mongodb": {
+        "enabled": true,
+        "purpose": "Efficient storage and retrieval of node properties and states"
+      },
+      "iceberg": {
+        "enabled": true,
+        "purpose": "Cold storage and large-scale querying"
+      }
+    },
+    "niem_ndex": {
+      "mappings": [
+        {
+          "source": "Person",
+          "target": "N-DEx Entity",
+          "fields": { "id": "EntityID", "name": "Name", "role": "Role" }
+        },
+        {
+          "source": "Event",
+          "target": "NIEM EventType",
+          "fields": { "event_type": "Type", "timestamp": "EventDate" }
+        }
+      ]
+    }
+  },
+  "visualization": {
+    "color_coding": {
+      "state": {
+        "Active": "#57C7E3",
+        "Inactive": "#D9D9D9",
+        "Compromised": "#F16667",
+        "Investigating": "#FFC454"
+      }
+    },
+    "tool": "Cytoscape.js"
+  }
+}

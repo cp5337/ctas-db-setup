@@ -1,0 +1,1667 @@
+{
+    "1.0 Pre-Operational Planning and Intelligence Gathering": {
+        "definition": "The process of gathering information and intelligence prior to the execution of an attack, including reconnaissance and identifying vulnerabilities.",
+        "tasks": [
+            {
+                "task_id": "1.1",
+                "name": "OSINT Collection",
+                "description": "Gathering publicly available information on targets through social media, public records, and online research.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "Reconnaissance",
+                        "technique": "T1595 (Active Scanning)"
+                    },
+                    "MITRE_Engage": "Leverage OSINT to build a target profile and identify potential phishing victims.",
+                    "NIST_CSF": "ID.AM-1: Identify and manage asset inventory.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Preparation",
+                        "objective": "Gather Information"
+                    },
+                    "Diamond_Model": {
+                        "adversary": "Identify target information from public sources.",
+                        "victim": "Target individual or organization."
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["Social Media Logs", "Public Databases"],
+                        "analytics": "Anomaly detection in user profiles."
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Suspicious social media account activity",
+                    "Frequent searches for target-specific information"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Identify key personnel from social media",
+                        "Map organizational structure using OSINT tools"
+                    ],
+                    "defensive": [
+                        "Monitor for unusual social media activity",
+                        "Implement OSINT monitoring tools"
+                    ],
+                    "investigative": [
+                        "Correlate OSINT data with threat actor profiles",
+                        "Analyze public record queries for targeting patterns"
+                    ]
+                }
+            },
+            {
+                "task_id": "1.2",
+                "name": "Phishing and Spear-Phishing Campaigns",
+                "description": "Targeted email campaigns aimed at obtaining credentials or planting malware.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "Initial Access",
+                        "technique": "T1566.001 (Spear Phishing via Email)"
+                    },
+                    "MITRE_Engage": "Mitigate by implementing user training and phishing simulations.",
+                    "NIST_CSF": "PR.AC-5: Manage access control by limiting information exposure.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Execution",
+                        "objective": "Gain Access"
+                    },
+                    "Diamond_Model": {
+                        "adversary": "Phishing infrastructure",
+                        "victim": "Target user or organization"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["Email Logs", "DNS Logs"],
+                        "analytics": "Phishing attempt detection based on link analysis."
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Emails with suspicious attachments or links",
+                    "Unexpected login attempts from unknown IPs"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Craft targeted spear-phishing email",
+                        "Embed malicious payload in email attachment"
+                    ],
+                    "defensive": [
+                        "Deploy anti-phishing tools",
+                        "Conduct phishing simulation training"
+                    ],
+                    "investigative": [
+                        "Trace email headers for source analysis",
+                        "Correlate phishing attempts with known threat actors"
+                    ]
+                }
+            },
+            {
+                "task_id": "1.3",
+                "name": "Network Scanning",
+                "description": "Identifying vulnerabilities in target networks using scanning tools to map attack vectors.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "Discovery",
+                        "technique": "T1046 (Network Service Scanning)"
+                    },
+                    "MITRE_Engage": "Use deception tactics to mislead adversary scans.",
+                    "NIST_CSF": "DE.CM-1: Detect anomalous activity through continuous monitoring.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Reconnaissance",
+                        "objective": "Identify Vulnerabilities"
+                    },
+                    "Diamond_Model": {
+                        "infrastructure": "Scanning tools and servers",
+                        "capability": "Port scanning, service enumeration"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["Firewall Logs", "Network Flow Data"],
+                        "analytics": "Anomalous scanning behavior detection"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Unusual increase in network traffic",
+                    "Frequent scans from external IPs"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Conduct network scan using Nmap",
+                        "Identify open ports and services"
+                    ],
+                    "defensive": [
+                        "Block suspicious IPs based on scan patterns",
+                        "Increase logging on identified targets"
+                    ],
+                    "investigative": [
+                        "Analyze scan patterns for attacker fingerprinting",
+                        "Identify potential scanning tools used"
+                    ]
+                }
+            }
+        ],
+        "HD4_Association": {
+            "phase": "Hunt",
+            "definition": "Proactively seeking out adversarial activities across networks, systems, and operations before they can execute their plans."
+        },
+        "Kill_Chain_Association": {
+            "phase": "Reconnaissance",
+            "definition": "The stage where the adversary gathers information on the target to plan their attack."
+        }
+    }
+}
+{
+    "2.0 Weapon and Tool Preparation": {
+        "definition": "The phase focused on assembling both physical and digital tools for conducting operations, including malware development and IED preparation.",
+        "tasks": [
+            {
+                "task_id": "2.1",
+                "name": "Weapon Assembly and Modifications",
+                "description": "Assembling physical tools for operations.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "Weaponization",
+                        "technique": "T1027 (Obfuscated Files or Information)"
+                    },
+                    "MITRE_Engage": "Deceive adversaries with false configurations and weaponized payloads.",
+                    "NIST_CSF": "PR.AC-3: Manage permissions and access control.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Development",
+                        "objective": "Prepare Weapon"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Tool creation and weapon modifications",
+                        "adversary": "State-sponsored threat actors"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["File System Logs", "Access Control Logs"],
+                        "analytics": "Anomaly detection in file creation and modifications"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Unusual file modifications",
+                    "Access to restricted system files"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Assemble custom payload for delivery",
+                        "Modify existing tools for obfuscation"
+                    ],
+                    "defensive": [
+                        "Monitor file system changes",
+                        "Enforce integrity checks on critical files"
+                    ],
+                    "investigative": [
+                        "Analyze file modifications for signatures",
+                        "Correlate tool assembly with known threat actor patterns"
+                    ]
+                }
+            },
+            {
+                "task_id": "2.2",
+                "name": "IED Design and Assembly",
+                "description": "Designing Improvised Explosive Devices (IEDs) for physical attack scenarios.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": "N/A (Physical Attack Scenario)",
+                    "MITRE_Engage": "Use deception tactics to detect and mislead adversary intentions.",
+                    "NIST_CSF": "PR.PT-4: Detect and respond to physical threats.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Weaponization",
+                        "objective": "Prepare Physical Device"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Device assembly and modification",
+                        "victim": "Critical infrastructure"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["Physical Security Logs", "Sensor Data"],
+                        "analytics": "Pattern recognition for physical device assembly"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Unusual activity in restricted areas",
+                    "Suspicious sensor readings"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Prepare and assemble IED with timed detonation",
+                        "Use deception devices to divert detection"
+                    ],
+                    "defensive": [
+                        "Increase monitoring on high-risk areas",
+                        "Deploy physical security measures"
+                    ],
+                    "investigative": [
+                        "Analyze surveillance data for assembly activity",
+                        "Correlate device components with known IED blueprints"
+                    ]
+                }
+            },
+            {
+                "task_id": "2.3",
+                "name": "CBRNE Weapon Development",
+                "description": "Creating chemical, biological, radiological, and nuclear devices.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": "N/A (Specialized Threat Scenario)",
+                    "MITRE_Engage": "Engage early detection systems for hazardous material threats.",
+                    "NIST_CSF": "PR.DS-5: Protect data at rest and in transit.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Preparation",
+                        "objective": "Develop CBRNE Capabilities"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Development of hazardous material devices",
+                        "adversary": "Nation-state or terrorist groups"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["Hazardous Material Logs", "Transport Logs"],
+                        "analytics": "Anomaly detection in hazardous material handling"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Increased procurement of hazardous materials",
+                    "Unusual transport of restricted substances"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Develop CBRNE payload for targeted delivery",
+                        "Integrate CBRNE with digital attack vector"
+                    ],
+                    "defensive": [
+                        "Deploy CBRNE detection systems",
+                        "Increase surveillance on hazardous material sites"
+                    ],
+                    "investigative": [
+                        "Trace procurement channels of hazardous materials",
+                        "Analyze transportation logs for irregular activities"
+                    ]
+                }
+            },
+            {
+                "task_id": "2.4",
+                "name": "Exploitation Frameworks",
+                "description": "Using advanced cyber exploitation tools to automate attacks.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "Execution",
+                        "technique": "T1219 (Remote Access Software)"
+                    },
+                    "MITRE_Engage": "Implement deception tactics to detect exploitation framework activity.",
+                    "NIST_CSF": "DE.CM-3: Monitor for unauthorized software installation.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Execution",
+                        "objective": "Exploit Target"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Cyber exploitation frameworks",
+                        "infrastructure": "Command and Control systems"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["Endpoint Logs", "Network Traffic Logs"],
+                        "analytics": "Exploit detection through command and control signatures"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Unusual software installations",
+                    "Unexplained command and control traffic"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Deploy exploitation framework for remote access",
+                        "Utilize automated tools for privilege escalation"
+                    ],
+                    "defensive": [
+                        "Block known exploit framework signatures",
+                        "Monitor endpoint for unauthorized software"
+                    ],
+                    "investigative": [
+                        "Analyze network traffic for exploit patterns",
+                        "Correlate exploit usage with adversary TTPs"
+                    ]
+                }
+            }
+        ],
+        "HD4_Association": {
+            "phase": "Detect",
+            "definition": "Real-time identification of adversary actions and their tactics, techniques, and procedures (TTPs)."
+        },
+        "Kill_Chain_Association": {
+            "phase": ["Weaponization", "Delivery"],
+            "definition": "Weaponization: The adversary creates or customizes a payload. Delivery: The adversary transmits the payload to the target."
+        }
+    }
+}
+{
+    "3.0 Operational Security (OPSEC)": {
+        "definition": "Implementing measures to maintain secrecy, anonymity, and persistence throughout an operation.",
+        "tasks": [
+            {
+                "task_id": "3.1",
+                "name": "Use of Encrypted Messaging Apps",
+                "description": "Using secure messaging platforms to avoid detection.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "Defense Evasion",
+                        "technique": "T1573 (Encrypted Channel)"
+                    },
+                    "MITRE_Engage": "Detect and monitor encrypted communication channels.",
+                    "NIST_CSF": "PR.DS-2: Protect data using encryption.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Execution",
+                        "objective": "Secure Communication"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Communication encryption",
+                        "victim": "Network defenders trying to intercept communication"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["Network Traffic Logs", "Application Logs"],
+                        "analytics": "Anomaly detection in encrypted traffic patterns"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Unusual spikes in encrypted traffic",
+                    "Usage of non-standard ports for encrypted apps"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Establish secure communication using encrypted apps",
+                        "Bypass network monitoring with encrypted channels"
+                    ],
+                    "defensive": [
+                        "Monitor encrypted traffic for anomalies",
+                        "Identify and block unauthorized encrypted apps"
+                    ],
+                    "investigative": [
+                        "Analyze network traffic for irregular encryption usage",
+                        "Correlate app usage with known adversary behaviors"
+                    ]
+                }
+            },
+            {
+                "task_id": "3.2",
+                "name": "Use of TOR and VPNs for Anonymity",
+                "description": "Protecting identity through encryption and masking.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "Defense Evasion",
+                        "technique": "T1090 (Proxy)"
+                    },
+                    "MITRE_Engage": "Detect anomalous use of proxy services and VPNs.",
+                    "NIST_CSF": "PR.PT-5: Protect against use of anonymization services.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Obfuscation",
+                        "objective": "Anonymize Activities"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Identity masking",
+                        "infrastructure": "TOR nodes, VPN services"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["Proxy Logs", "VPN Logs"],
+                        "analytics": "Detection of high-risk anonymization services"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Frequent connections to known TOR exit nodes",
+                    "Unusual VPN usage outside typical business hours"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Utilize TOR or VPN for anonymized operations",
+                        "Obfuscate source IP using proxy services"
+                    ],
+                    "defensive": [
+                        "Monitor and block TOR and known VPN IP addresses",
+                        "Analyze VPN usage for suspicious patterns"
+                    ],
+                    "investigative": [
+                        "Identify connections to anonymization services",
+                        "Correlate VPN usage with unauthorized activities"
+                    ]
+                }
+            },
+            {
+                "task_id": "3.3",
+                "name": "Use of Command and Control (C2) Infrastructure",
+                "description": "Setting up communication channels to maintain control over compromised systems.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "Command and Control",
+                        "technique": "T1105 (Ingress Tool Transfer)"
+                    },
+                    "MITRE_Engage": "Disrupt command and control infrastructure to hinder adversary operations.",
+                    "NIST_CSF": "DE.CM-6: Monitor command and control communications.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Command and Control",
+                        "objective": "Maintain Control Over Systems"
+                    },
+                    "Diamond_Model": {
+                        "capability": "C2 infrastructure setup",
+                        "adversary": "APT groups, cybercriminals"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["C2 Traffic Logs", "Firewall Logs"],
+                        "analytics": "Detection of C2 beaconing and traffic anomalies"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Unusual beaconing patterns",
+                    "Outbound traffic to known C2 servers"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Establish C2 channels for persistent control",
+                        "Transfer tools via C2 infrastructure"
+                    ],
+                    "defensive": [
+                        "Monitor for C2 beaconing activity",
+                        "Block traffic to known C2 IP addresses"
+                    ],
+                    "investigative": [
+                        "Analyze C2 traffic patterns",
+                        "Trace C2 infrastructure to its origin"
+                    ]
+                }
+            },
+            {
+                "task_id": "3.4",
+                "name": "DNS Tunneling",
+                "description": "Exfiltrating data through DNS queries to bypass security.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "Exfiltration",
+                        "technique": "T1071.004 (DNS Tunneling)"
+                    },
+                    "MITRE_Engage": "Detect abnormal DNS traffic indicative of tunneling.",
+                    "NIST_CSF": "DE.CM-7: Monitor DNS traffic for anomalies.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Exfiltration",
+                        "objective": "Bypass Security Controls"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Data exfiltration using DNS",
+                        "victim": "Network defenses relying on DNS monitoring"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["DNS Logs", "Network Traffic Logs"],
+                        "analytics": "Detection of DNS query anomalies"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "High volume of DNS queries",
+                    "DNS requests with unusual payloads"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Utilize DNS tunneling for stealthy data exfiltration",
+                        "Encode data within DNS requests"
+                    ],
+                    "defensive": [
+                        "Monitor DNS traffic for tunneling indicators",
+                        "Implement DNS query analysis for anomalies"
+                    ],
+                    "investigative": [
+                        "Analyze DNS queries for hidden data",
+                        "Correlate DNS traffic with exfiltration attempts"
+                    ]
+                }
+            }
+        ],
+        "HD4_Association": {
+            "phase": "Disable",
+            "definition": "Neutralizing adversarial capabilities such as malware, C2 nodes, and compromised systems."
+        },
+        "Kill_Chain_Association": {
+            "phase": ["Exploitation", "Installation"],
+            "definition": "Exploitation: The adversary triggers a vulnerability. Installation: Malware or persistence mechanisms are installed on the target."
+        }
+    }
+}
+{
+    "4.0 Financing and Funding Operations": {
+        "definition": "The methods used to raise and manage funds for operations, often through illegal or hidden means.",
+        "tasks": [
+            {
+                "task_id": "4.1",
+                "name": "Exploitation of Crowdfunding Platforms",
+                "description": "Raising funds under false pretenses using legitimate platforms.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "Resource Development",
+                        "technique": "T1587.003 (Compromise Social Media Accounts)"
+                    },
+                    "MITRE_Engage": "Monitor and disrupt adversary attempts to exploit crowdfunding services.",
+                    "NIST_CSF": "PR.DS-5: Protect financial data and systems from misuse.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Development",
+                        "objective": "Resource Acquisition"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Financial manipulation",
+                        "victim": "Crowdfunding platforms and donors"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["Social Media Logs", "Financial Transaction Logs"],
+                        "analytics": "Detection of anomalous financial activities"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Multiple crowdfunding campaigns with similar metadata",
+                    "Unusual spikes in small, anonymous donations"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Leverage fake profiles for fundraising campaigns",
+                        "Bypass platform verification to solicit funds"
+                    ],
+                    "defensive": [
+                        "Monitor crowdfunding activities for fraud indicators",
+                        "Flag suspicious patterns of donations"
+                    ],
+                    "investigative": [
+                        "Trace the origin of donations",
+                        "Analyze campaign metadata for links to known adversaries"
+                    ]
+                }
+            },
+            {
+                "task_id": "4.2",
+                "name": "Use of Cryptocurrency for Fundraising",
+                "description": "Leveraging digital currencies to finance operations.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "Resource Development",
+                        "technique": "T1587.001 (Cryptocurrency Mining)"
+                    },
+                    "MITRE_Engage": "Monitor blockchain activity for illicit fundraising.",
+                    "NIST_CSF": "PR.AC-5: Protect access to financial assets including cryptocurrency.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Development",
+                        "objective": "Secure Funding"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Cryptocurrency transactions",
+                        "infrastructure": "Cryptocurrency wallets and exchanges"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["Blockchain Transaction Logs", "Crypto Wallet Logs"],
+                        "analytics": "Anomaly detection in crypto transactions"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Transactions to or from high-risk cryptocurrency wallets",
+                    "Frequent small transactions to obfuscate funds (smurfing)"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Establish anonymous crypto wallets for fundraising",
+                        "Use mixers and tumblers to hide transaction trails"
+                    ],
+                    "defensive": [
+                        "Monitor for suspicious crypto wallet activity",
+                        "Implement blockchain analytics to detect illicit transactions"
+                    ],
+                    "investigative": [
+                        "Analyze blockchain transactions for links to threat actors",
+                        "Correlate cryptocurrency activity with known adversary indicators"
+                    ]
+                }
+            },
+            {
+                "task_id": "4.3",
+                "name": "Cryptocurrency Laundering through Mixers and Tumblers",
+                "description": "Obfuscating the source of funds to avoid detection.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "Defense Evasion",
+                        "technique": "T1483 (Domain Generation Algorithms)"
+                    },
+                    "MITRE_Engage": "Identify and disrupt laundering activities using mixers.",
+                    "NIST_CSF": "PR.PT-6: Protect against unauthorized use of financial systems.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Obfuscation",
+                        "objective": "Conceal Financial Transactions"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Financial obfuscation",
+                        "victim": "Financial surveillance systems"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["Crypto Exchange Logs", "Blockchain Mixer Logs"],
+                        "analytics": "Detection of laundering via mixers"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Frequent use of cryptocurrency mixers",
+                    "Unusual transaction patterns across multiple exchanges"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Utilize mixers and tumblers to obscure fund origins",
+                        "Chain multiple transactions to evade tracking"
+                    ],
+                    "defensive": [
+                        "Monitor for patterns indicative of mixing services",
+                        "Block known mixer addresses on exchanges"
+                    ],
+                    "investigative": [
+                        "Trace funds through mixer services using blockchain analytics",
+                        "Identify patterns of laundering activity"
+                    ]
+                }
+            },
+            {
+                "task_id": "4.4",
+                "name": "Cryptojacking Attack",
+                "description": "Mining cryptocurrency using compromised systems without the owner's knowledge.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "Credential Access",
+                        "technique": "T1496 (Resource Hijacking)"
+                    },
+                    "MITRE_Engage": "Detect and mitigate unauthorized cryptocurrency mining.",
+                    "NIST_CSF": "PR.AC-3: Protect against unauthorized use of resources.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Execution",
+                        "objective": "Resource Exploitation"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Resource hijacking",
+                        "infrastructure": "Compromised endpoints"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["Endpoint Logs", "Cloud Resource Usage"],
+                        "analytics": "Detection of abnormal resource consumption"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Spike in CPU usage on compromised systems",
+                    "Installation of unauthorized mining software"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Deploy cryptojacking scripts on vulnerable systems",
+                        "Leverage compromised cloud accounts for mining"
+                    ],
+                    "defensive": [
+                        "Monitor for abnormal CPU usage and mining indicators",
+                        "Block unauthorized mining software installations"
+                    ],
+                    "investigative": [
+                        "Identify compromised systems showing mining activity",
+                        "Trace the source of cryptojacking scripts"
+                    ]
+                }
+            }
+        ],
+        "HD4_Association": {
+            "phase": "Detect",
+            "definition": "Real-time identification of funding operations, especially through cryptocurrency and hidden transactions."
+        },
+        "Kill_Chain_Association": {
+            "phase": "Weaponization",
+            "definition": "The adversary prepares the tools for attack, which can include raising funds for the operation."
+        }
+    }
+}
+{
+    "5.0 Reconnaissance and Targeting": {
+        "definition": "Mapping and selecting the target's systems, networks, and critical infrastructure to plan the attack.",
+        "tasks": [
+            {
+                "task_id": "5.1",
+                "name": "Network Enumeration",
+                "description": "Mapping the network to find weaknesses.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "Discovery",
+                        "technique": "T1046 (Network Service Scanning)"
+                    },
+                    "MITRE_Engage": "Identify and block network enumeration attempts by adversaries.",
+                    "NIST_CSF": "PR.AC-5: Manage access to systems and data to minimize unauthorized discovery.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Discovery",
+                        "objective": "Identify Network Infrastructure"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Discovery",
+                        "victim": "Network infrastructure components"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["Network Traffic Logs", "Firewall Logs"],
+                        "analytics": "Anomalous network scanning activity detection"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Unusual network scan patterns",
+                    "High volume of ICMP or TCP SYN packets"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Conduct stealth scans using tools like Nmap or Masscan",
+                        "Utilize fragmented packets to evade detection"
+                    ],
+                    "defensive": [
+                        "Deploy network intrusion detection systems (NIDS) to monitor scanning activity",
+                        "Use rate-limiting to mitigate excessive scanning attempts"
+                    ],
+                    "investigative": [
+                        "Analyze network traffic for scanning patterns",
+                        "Correlate scanning activity with known adversary tactics"
+                    ]
+                }
+            },
+            {
+                "task_id": "5.2",
+                "name": "Vulnerability Exploitation",
+                "description": "Identifying and exploiting flaws in systems.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "Initial Access",
+                        "technique": "T1190 (Exploit Public-Facing Application)"
+                    },
+                    "MITRE_Engage": "Monitor for exploitation attempts and patch known vulnerabilities.",
+                    "NIST_CSF": "DE.CM-8: Detect and respond to vulnerability exploitation attempts.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Attack Execution",
+                        "objective": "Exploit System Weaknesses"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Exploitation",
+                        "victim": "Vulnerable systems"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["Vulnerability Scanning Logs", "Application Error Logs"],
+                        "analytics": "Detection of exploitation attempts"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Error logs showing buffer overflow exceptions",
+                    "Access attempts using known vulnerable endpoints"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Exploit identified vulnerabilities using Metasploit or custom scripts",
+                        "Leverage known exploits from CVE databases"
+                    ],
+                    "defensive": [
+                        "Patch vulnerable systems promptly",
+                        "Implement virtual patching using WAF (Web Application Firewall)"
+                    ],
+                    "investigative": [
+                        "Analyze exploit payloads for indicators",
+                        "Correlate exploit attempts with recent vulnerability disclosures"
+                    ]
+                }
+            },
+            {
+                "task_id": "5.3",
+                "name": "Target Selection of Critical Infrastructure Sectors",
+                "description": "Identifying high-value targets such as energy or financial systems.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "Impact",
+                        "technique": "T1499 (Endpoint DoS)"
+                    },
+                    "MITRE_Engage": "Prioritize defense for critical infrastructure sectors against targeted attacks.",
+                    "NIST_CSF": "ID.BE-5: Identify critical business functions and assets.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Targeting",
+                        "objective": "Select High-Impact Targets"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Targeted attack",
+                        "victim": "Critical infrastructure sectors"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["Sector-Specific Logs", "Threat Intelligence Feeds"],
+                        "analytics": "Detection of sector-specific targeting"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Suspicious traffic directed at critical infrastructure IP ranges",
+                    "Probing attempts against sector-specific systems (e.g., SCADA systems)"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Select high-value targets based on intelligence and criticality",
+                        "Leverage sector-specific vulnerabilities for exploitation"
+                    ],
+                    "defensive": [
+                        "Deploy sector-specific protections and monitoring",
+                        "Engage threat intelligence to identify sector-specific threats"
+                    ],
+                    "investigative": [
+                        "Identify targeted sectors based on attack patterns",
+                        "Correlate adversary tactics with sector-specific indicators"
+                    ]
+                }
+            },
+            {
+                "task_id": "5.4",
+                "name": "Cloud and IoT Exploitation",
+                "description": "Targeting cloud systems and IoT devices for vulnerabilities.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "Initial Access",
+                        "technique": "T1078 (Valid Accounts)"
+                    },
+                    "MITRE_Engage": "Monitor cloud environments and IoT devices for unauthorized access attempts.",
+                    "NIST_CSF": "PR.AC-4: Protect access to cloud and IoT devices.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Execution",
+                        "objective": "Compromise Cloud/IoT Infrastructure"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Cloud/IoT exploitation",
+                        "victim": "Cloud and IoT devices"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["Cloud Access Logs", "IoT Device Logs"],
+                        "analytics": "Detection of anomalous IoT and cloud activity"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Unauthorized API calls to cloud services",
+                    "Unusual activity from IoT devices"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Exploit weak configurations in cloud services",
+                        "Target vulnerable IoT devices with known exploits"
+                    ],
+                    "defensive": [
+                        "Enable multi-factor authentication (MFA) for cloud services",
+                        "Monitor IoT device activity for anomalies"
+                    ],
+                    "investigative": [
+                        "Trace unauthorized cloud access attempts",
+                        "Analyze compromised IoT device logs for indicators"
+                    ]
+                }
+            }
+        ],
+        "HD4_Association": {
+            "phase": "Hunt",
+            "definition": "Seeking out vulnerabilities and opportunities for adversarial exploitation before the adversary can strike."
+        },
+        "Kill_Chain_Association": {
+            "phase": ["Reconnaissance", "Weaponization"],
+            "definition": "Reconnaissance: The adversary gathers intelligence. Weaponization: The adversary prepares tools for attack based on the reconnaissance."
+        }
+    }
+}
+{
+    "6.0 Tactical Planning and Coordination": {
+        "definition": "Developing attack strategies, assigning roles, and rehearsing operations to ensure coordinated execution.",
+        "tasks": [
+            {
+                "task_id": "6.1",
+                "name": "Developing Attack Strategies",
+                "description": "Creating operational plans based on intelligence.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "TA0040 (Command and Control)",
+                        "technique": "T1568 (Dynamic Resolution)"
+                    },
+                    "MITRE_Engage": "Simulate adversary strategy development to preempt potential attacks.",
+                    "NIST_CSF": "ID.RA-3: Determine risk response strategies based on gathered intelligence.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Strategic Planning",
+                        "objective": "Plan coordinated attack activities"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Strategic Coordination",
+                        "adversary": "Adversary planning tactics and operations"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["Threat Intelligence Reports", "Strategic Planning Logs"],
+                        "analytics": "Detection of adversary planning activities"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Unusual increase in threat intelligence activities",
+                    "Access to sensitive planning documents or tools"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Leverage real-time intelligence to craft attack strategies",
+                        "Incorporate deception tactics to mislead adversary defenses"
+                    ],
+                    "defensive": [
+                        "Analyze threat intelligence for adversary strategy indicators",
+                        "Deploy active defense measures based on detected planning activities"
+                    ],
+                    "investigative": [
+                        "Correlate strategy documents with known adversary TTPs",
+                        "Analyze planning patterns for predictive insights"
+                    ]
+                }
+            },
+            {
+                "task_id": "6.2",
+                "name": "Assigning Roles and Responsibilities",
+                "description": "Organizing team roles for attack execution.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "TA0007 (Privilege Escalation)",
+                        "technique": "T1078 (Valid Accounts)"
+                    },
+                    "MITRE_Engage": "Define clear roles and responsibilities to streamline engagement operations.",
+                    "NIST_CSF": "PR.AT-5: Define roles and responsibilities in cybersecurity processes.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Preparation",
+                        "objective": "Allocate team roles for coordinated action"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Resource Management",
+                        "adversary": "Role assignment in adversary operations"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["User Role Management Logs", "Access Control Logs"],
+                        "analytics": "Detection of role changes and unusual access"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Unexpected changes in user roles or permissions",
+                    "Multiple users assigned similar high-privilege roles"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Establish role-based access control for operational efficiency",
+                        "Utilize privilege escalation tactics for access expansion"
+                    ],
+                    "defensive": [
+                        "Monitor role changes for signs of abuse or escalation",
+                        "Regularly review user access roles and permissions"
+                    ],
+                    "investigative": [
+                        "Investigate role assignments for anomalies",
+                        "Cross-reference role changes with recent access patterns"
+                    ]
+                }
+            },
+            {
+                "task_id": "6.3",
+                "name": "Contingency Planning",
+                "description": "Preparing for potential failures with backup plans.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "TA0011 (Defense Evasion)",
+                        "technique": "T1562 (Impair Defenses)"
+                    },
+                    "MITRE_Engage": "Develop contingency plans to handle adversary actions and unexpected scenarios.",
+                    "NIST_CSF": "RS.RP-1: Establish and maintain response plans for incident scenarios.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Mitigation",
+                        "objective": "Implement fallback measures in case of failure"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Resilience Planning",
+                        "adversary": "Fallback mechanisms and contingency measures"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["Incident Response Plans", "System Backup Logs"],
+                        "analytics": "Detection of fallback mechanisms activation"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Activation of backup systems unexpectedly",
+                    "Deployment of alternative command and control channels"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Implement redundant C2 channels to ensure persistence",
+                        "Deploy backup payloads in case of primary payload failure"
+                    ],
+                    "defensive": [
+                        "Monitor for activation of contingency mechanisms",
+                        "Verify integrity of backup systems regularly"
+                    ],
+                    "investigative": [
+                        "Analyze fallback measures for signs of compromise",
+                        "Correlate backup activation with attack timelines"
+                    ]
+                }
+            },
+            {
+                "task_id": "6.4",
+                "name": "Conducting Dry Runs and Rehearsals",
+                "description": "Testing strategies before deployment.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "TA0006 (Credential Access)",
+                        "technique": "T1110 (Brute Force)"
+                    },
+                    "MITRE_Engage": "Simulate dry runs to identify potential weaknesses before full execution.",
+                    "NIST_CSF": "PR.IP-4: Conduct regular tests and exercises of incident response plans.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Simulation",
+                        "objective": "Test operational readiness"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Testing",
+                        "adversary": "Rehearsing attack procedures"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["Test Execution Logs", "User Authentication Logs"],
+                        "analytics": "Detection of repeated access attempts simulating attack scenarios"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Repeated failed login attempts simulating brute-force",
+                    "Execution of testing scripts targeting specific systems"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Conduct simulated attacks to test defense readiness",
+                        "Use red team exercises for realistic rehearsal"
+                    ],
+                    "defensive": [
+                        "Monitor for unusual test activities in production environments",
+                        "Implement detection mechanisms for test patterns"
+                    ],
+                    "investigative": [
+                        "Analyze test logs for patterns resembling known attack TTPs",
+                        "Verify that dry runs were conducted in controlled environments"
+                    ]
+                }
+            }
+        ],
+        "HD4_Association": {
+            "phase": "Disrupt",
+            "definition": "Interfering with adversary operations by creating confusion, delays, or changing their tactics."
+        },
+        "Kill_Chain_Association": {
+            "phase": "Command & Control",
+            "definition": "The phase where the adversary establishes and maintains communication with compromised systems."
+        }
+    }
+}
+{
+    "7.0 Execution of Cyber and Physical Attacks": {
+        "definition": "Carrying out the planned attacks on the identified targets, whether through cyber means or physical actions.",
+        "tasks": [
+            {
+                "task_id": "7.1",
+                "name": "Disabling Security Systems",
+                "description": "Neutralizing security defenses to facilitate further attacks.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "TA0005 (Defense Evasion)",
+                        "technique": "T1562 (Impair Defenses)"
+                    },
+                    "MITRE_Engage": "Preemptively disable security controls to maximize adversary operation impact.",
+                    "NIST_CSF": "PR.DS-2: Protect data at rest and manage defenses effectively.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Execution",
+                        "objective": "Impair defenses to enable attack operations"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Attack Execution",
+                        "adversary": "Disabling defensive measures"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["Security Device Logs", "Firewall Logs"],
+                        "analytics": "Detection of sudden deactivation of security controls"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Unexpected shutdown of antivirus software",
+                    "Disabled firewall rules or security alerts"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Deploy tools to disable endpoint protection",
+                        "Exploit vulnerabilities in security software for evasion"
+                    ],
+                    "defensive": [
+                        "Monitor for unexpected changes in security configurations",
+                        "Implement tamper detection mechanisms for security tools"
+                    ],
+                    "investigative": [
+                        "Analyze system logs for unauthorized deactivation events",
+                        "Correlate incidents of impaired defenses with ongoing attack patterns"
+                    ]
+                }
+            },
+            {
+                "task_id": "7.2",
+                "name": "Targeting Critical Infrastructure",
+                "description": "Attacking key systems in energy, water, or financial sectors.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "TA0043 (Impact)",
+                        "technique": "T1489 (Service Stop)"
+                    },
+                    "MITRE_Engage": "Prioritize critical infrastructure attacks to maximize operational disruption.",
+                    "NIST_CSF": "ID.BE-3: Identify critical infrastructure dependencies and vulnerabilities.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Impact",
+                        "objective": "Disrupt essential services to cause maximum damage"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Sector-Specific Impact",
+                        "adversary": "Targeting critical infrastructure assets"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["SCADA Logs", "Critical Infrastructure Alerts"],
+                        "analytics": "Detection of anomalies in critical infrastructure systems"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Anomalous activity detected in SCADA or ICS systems",
+                    "Unexplained outages or disruptions in critical services"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Leverage ICS-specific exploits for targeted attacks",
+                        "Use DDoS tactics to overwhelm critical infrastructure systems"
+                    ],
+                    "defensive": [
+                        "Deploy enhanced monitoring for critical infrastructure systems",
+                        "Implement redundant systems and failover mechanisms"
+                    ],
+                    "investigative": [
+                        "Analyze SCADA logs for irregular command sequences",
+                        "Investigate unexplained service interruptions for potential attack vectors"
+                    ]
+                }
+            },
+            {
+                "task_id": "7.3",
+                "name": "Deploying WMD (Chemical, Biological, Radiological, Nuclear)",
+                "description": "Using weapons of mass destruction as part of coordinated attack operations.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "TA0040 (Command and Control)",
+                        "technique": "T1095 (Non-Application Layer Protocol)"
+                    },
+                    "MITRE_Engage": "Simulate high-impact attack scenarios involving WMDs.",
+                    "NIST_CSF": "RS.MI-1: Mitigate the impacts of identified incidents effectively.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Impact",
+                        "objective": "Maximize damage using high-impact attack vectors"
+                    },
+                    "Diamond_Model": {
+                        "capability": "High-Impact Attack Execution",
+                        "adversary": "Use of non-conventional weapons"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["CBRN Alerts", "Emergency Response Logs"],
+                        "analytics": "Detection of indicators related to CBRN threats"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "CBRN alerts triggered by environmental monitoring systems",
+                    "Unusual activity in areas with restricted access"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Coordinate with physical attack teams for WMD deployment",
+                        "Utilize CBRN-specific malware to disrupt response capabilities"
+                    ],
+                    "defensive": [
+                        "Enhance monitoring for CBRN indicators",
+                        "Activate emergency response plans and secure affected areas"
+                    ],
+                    "investigative": [
+                        "Cross-reference CBRN alerts with cyber activity logs",
+                        "Assess potential links between physical and cyber incidents"
+                    ]
+                }
+            },
+            {
+                "task_id": "7.4",
+                "name": "Data Exfiltration",
+                "description": "Extracting sensitive data from compromised networks.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "TA0010 (Exfiltration)",
+                        "technique": "T1041 (Exfiltration Over C2 Channel)"
+                    },
+                    "MITRE_Engage": "Use stealthy exfiltration techniques to avoid detection.",
+                    "NIST_CSF": "PR.DS-5: Ensure data protection during exfiltration activities.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Execution",
+                        "objective": "Extract sensitive data without detection"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Data Exfiltration",
+                        "adversary": "Extracting data using covert methods"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["Network Traffic Logs", "Data Loss Prevention Alerts"],
+                        "analytics": "Detection of abnormal data transfer patterns"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Unusual outbound traffic spikes",
+                    "Anomalous use of encryption for outbound data"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Use encryption to mask exfiltrated data",
+                        "Leverage covert channels for data exfiltration"
+                    ],
+                    "defensive": [
+                        "Monitor for unusual outbound data transfers",
+                        "Implement DLP solutions to detect and prevent unauthorized exfiltration"
+                    ],
+                    "investigative": [
+                        "Analyze outbound traffic for signs of data exfiltration",
+                        "Correlate exfiltration attempts with known adversary techniques"
+                    ]
+                }
+            }
+        ],
+        "HD4_Association": {
+            "phase": "Dominate",
+            "definition": "Establishing control over the cyber environment and preventing future adversary activities."
+        },
+        "Kill_Chain_Association": {
+            "phase": "Actions on Objectives",
+            "definition": "The adversary achieves their goal, such as stealing data or disabling systems."
+        }
+    }
+}
+{
+    "8.0 Post-Attack Activities and Evasion": {
+        "definition": "Covering tracks, removing evidence, and using techniques to evade detection after the attack is executed.",
+        "tasks": [
+            {
+                "task_id": "8.1",
+                "name": "Deleting Digital Evidence",
+                "description": "Removing traces of activity from networks and devices.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "TA0005 (Defense Evasion)",
+                        "technique": "T1070 (Indicator Removal on Host)"
+                    },
+                    "MITRE_Engage": "Use cleanup techniques to hide traces of adversary actions.",
+                    "NIST_CSF": "PR.PT-5: Protect and ensure data integrity and secure logging practices.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Execution",
+                        "objective": "Conceal adversary activities from detection"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Indicator Manipulation",
+                        "adversary": "Removal of forensic traces"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["System Logs", "File Deletion Events"],
+                        "analytics": "Detection of abnormal file deletions or log tampering"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Unusual deletion of system logs",
+                    "File integrity changes on critical system files"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Use secure delete tools to wipe logs",
+                        "Remove forensic artifacts from compromised systems"
+                    ],
+                    "defensive": [
+                        "Implement file integrity monitoring on critical systems",
+                        "Log all file deletion events and trigger alerts for abnormal activity"
+                    ],
+                    "investigative": [
+                        "Examine logs for signs of tampering or deletion",
+                        "Correlate file deletions with suspicious process activity"
+                    ]
+                }
+            },
+            {
+                "task_id": "8.2",
+                "name": "Rotating Digital Identities",
+                "description": "Using new identities to avoid detection.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "TA0005 (Defense Evasion)",
+                        "technique": "T1098 (Account Manipulation)"
+                    },
+                    "MITRE_Engage": "Employ identity rotation to evade detection during prolonged operations.",
+                    "NIST_CSF": "ID.AM-6: Manage and track identities for secure access.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Execution",
+                        "objective": "Avoid detection through identity manipulation"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Identity Obfuscation",
+                        "adversary": "Changing digital identities to evade monitoring"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["Authentication Logs", "User Account Events"],
+                        "analytics": "Detection of unusual account changes or new identity usage"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Creation of new user accounts during an ongoing attack",
+                    "Unexpected changes to user permissions or access levels"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Rotate compromised credentials to maintain persistence",
+                        "Create new accounts with elevated permissions for ongoing access"
+                    ],
+                    "defensive": [
+                        "Monitor for unusual account creation and privilege escalation",
+                        "Implement multi-factor authentication to prevent unauthorized access"
+                    ],
+                    "investigative": [
+                        "Analyze account creation logs for anomalies",
+                        "Cross-reference new accounts with known indicators of adversary behavior"
+                    ]
+                }
+            },
+            {
+                "task_id": "8.3",
+                "name": "Advanced Obfuscation Techniques",
+                "description": "Using data encoding, fileless malware, or polymorphic malware to evade detection.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "TA0005 (Defense Evasion)",
+                        "technique": "T1027 (Obfuscated Files or Information)"
+                    },
+                    "MITRE_Engage": "Utilize obfuscation techniques to bypass detection mechanisms.",
+                    "NIST_CSF": "PR.DS-8: Ensure data integrity through protective measures.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Execution",
+                        "objective": "Conceal malicious activity through obfuscation"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Stealth Techniques",
+                        "adversary": "Use of obfuscation to avoid detection"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["Script Execution Logs", "Encoded Command Alerts"],
+                        "analytics": "Detection of obfuscated scripts or encoded commands"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Encoded PowerShell commands in script execution logs",
+                    "Presence of polymorphic malware signatures"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Use PowerShell encoding to obfuscate commands",
+                        "Deploy polymorphic malware to evade signature-based detection"
+                    ],
+                    "defensive": [
+                        "Enable deep script analysis to detect obfuscated commands",
+                        "Monitor for execution of encoded or compressed scripts"
+                    ],
+                    "investigative": [
+                        "Deobfuscate encoded commands for analysis",
+                        "Correlate obfuscation attempts with known adversary tactics"
+                    ]
+                }
+            },
+            {
+                "task_id": "8.4",
+                "name": "Evading Detection through Mobility and Safe Houses",
+                "description": "Using secure locations to avoid capture.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "TA0007 (Privilege Escalation)",
+                        "technique": "T1211 (Exploitation for Defense Evasion)"
+                    },
+                    "MITRE_Engage": "Leverage mobility and secure locations to avoid detection and capture.",
+                    "NIST_CSF": "PR.AC-3: Implement access control measures to secure critical assets.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Execution",
+                        "objective": "Avoid detection using mobility and secure locations"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Evasion Techniques",
+                        "adversary": "Use of mobility and secure facilities for evasion"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["Location Data Logs", "Access Control Alerts"],
+                        "analytics": "Detection of anomalous changes in location or access patterns"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Sudden change in IP addresses to remote or foreign locations",
+                    "Anomalous access from previously unseen geographical regions"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Use VPNs and TOR networks to obscure the attack origin",
+                        "Leverage physical safe houses for extended operations"
+                    ],
+                    "defensive": [
+                        "Monitor for sudden changes in user location",
+                        "Deploy geofencing to detect access from unexpected regions"
+                    ],
+                    "investigative": [
+                        "Correlate location changes with known adversary behavior",
+                        "Investigate anomalies in access patterns for signs of evasion"
+                    ]
+                }
+            }
+        ],
+        "HD4_Association": {
+            "phase": "Disable",
+            "definition": "Disabling or neutralizing adversary persistence and capabilities to prevent future attacks."
+        },
+        "Kill_Chain_Association": {
+            "phase": ["Exploitation", "Actions on Objectives"],
+            "definition": "Exploitation: The adversary uses the compromised system. Actions on Objectives: The adversary achieves their goal."
+        }
+    }
+}
+{
+    "9.0 Major Crimes": {
+        "definition": "Engaging in violent crimes to fund operations or create chaos, including robbery, arson, and murder.",
+        "tasks": [
+            {
+                "task_id": "9.1",
+                "name": "Murder and Nonnegligent Manslaughter",
+                "description": "Killing individuals for operational gain.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "TA0040 (Impact)",
+                        "technique": "T1499 (Endpoint Denial of Service - Physical Harm)"
+                    },
+                    "NIST_CSF": "RS.MI-3: Mitigate impacts from physical and violent threats.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Execution",
+                        "objective": "Create fear and chaos through violent acts"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Direct Physical Attack",
+                        "adversary": "Violent action to achieve operational objectives"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["Law Enforcement Reports", "Medical Examiner Records"],
+                        "analytics": "Correlate violent incidents with adversarial operations"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Unexplained disappearances of high-value targets",
+                    "Unusual increase in violent crime rates in targeted regions"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Plan and execute targeted eliminations to disrupt adversary operations",
+                        "Leverage local criminal networks to carry out attacks"
+                    ],
+                    "defensive": [
+                        "Increase protection for key personnel and high-value targets",
+                        "Implement intelligence sharing with law enforcement agencies"
+                    ],
+                    "investigative": [
+                        "Analyze crime data for patterns linked to adversary operations",
+                        "Coordinate with law enforcement for forensic evidence collection"
+                    ]
+                }
+            },
+            {
+                "task_id": "9.2",
+                "name": "Forcible Rape",
+                "description": "Using sexual violence as a tool of terror.",
+                "framework_mappings": {
+                    "NIST_CSF": "RS.CO-5: Communicate and coordinate responses to physical and psychological threats.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Execution",
+                        "objective": "Use sexual violence to instill fear and exert control"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Psychological Warfare",
+                        "adversary": "Inflicting psychological trauma to destabilize communities"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["Victim Reports", "Healthcare Records"],
+                        "analytics": "Detect patterns of sexual violence linked to adversary presence"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Reports of sexual violence coinciding with increased adversary activity",
+                    "Unusual uptick in trauma-related healthcare visits"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Exploit social vulnerabilities to weaken community resistance",
+                        "Utilize sexual violence as a means of psychological intimidation"
+                    ],
+                    "defensive": [
+                        "Enhance victim support and trauma response capabilities",
+                        "Implement community outreach programs for early reporting"
+                    ],
+                    "investigative": [
+                        "Conduct interviews with survivors to gather intelligence",
+                        "Correlate incidents with adversary movements and communications"
+                    ]
+                }
+            },
+            {
+                "task_id": "9.3",
+                "name": "Robbery",
+                "description": "Armed theft for financial or material gain.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "TA0006 (Credential Access)",
+                        "technique": "T1550 (Use of Stolen Credentials)"
+                    },
+                    "NIST_CSF": "PR.AC-5: Manage physical access to assets.",
+                    "ODNI_Cyber_Threat_Framework": {
+                        "stage": "Resource Development",
+                        "objective": "Obtain financial or material resources through theft"
+                    },
+                    "Diamond_Model": {
+                        "capability": "Material Acquisition",
+                        "adversary": "Acquiring resources through direct theft"
+                    },
+                    "PEAK_Splunk": {
+                        "data_sources": ["Surveillance Footage", "Bank Transaction Alerts"],
+                        "analytics": "Detect suspicious withdrawals or transfers linked to adversary accounts"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Sudden, unexplained financial gains by known adversary members",
+                    "Reports of armed robberies in locations with high adversary presence"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Plan armed thefts to secure operational funding",
+                        "Coordinate with local criminal elements for execution"
+                    ],
+                    "defensive": [
+                        "Increase surveillance and physical security in high-risk areas",
+                        "Collaborate with financial institutions for rapid reporting of suspicious activities"
+                    ],
+                    "investigative": [
+                        "Analyze financial transactions for links to adversary networks",
+                        "Review surveillance footage for identification of perpetrators"
+                    ]
+                }
+            }
+        ],
+        "HD4_Association": {
+            "phase": "Dominate",
+            "definition": "Exerting control over the adversary's environment to prevent future attacks and maintain dominance."
+        },
+        "Kill_Chain_Association": {
+            "phase": "Actions on Objectives",
+            "definition": "The adversary achieves their goal, such as stealing assets or creating chaos."
+        }
+    }
+}
+{
+    "10.0 Interaction with Law Enforcement and Exploitation": {
+        "definition": "Managing encounters with law enforcement to avoid capture or exploit those interactions to gain intelligence.",
+        "tasks": [
+            {
+                "task_id": "10.1",
+                "name": "Bribery and Corruption of Police and Officials",
+                "description": "Offering payments to avoid arrest or prosecution.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "TA0043 (Resource Development)",
+                        "technique": "T1589 (Bribery for Intelligence Gathering)"
+                    },
+                    "NIST_CSF": "RS.CO-4: Coordinate with stakeholders to manage and report incidents.",
+                    "Diamond_Model": {
+                        "capability": "Influence Operations",
+                        "adversary": "Manipulating officials for operational advantage"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Unusual financial transactions linked to law enforcement personnel",
+                    "Reports of lenient treatment of known adversary members"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Offer bribes to key officials for favorable treatment",
+                        "Exploit corrupt relationships to gain insider information"
+                    ],
+                    "defensive": [
+                        "Monitor financial transactions of law enforcement personnel",
+                        "Implement anti-corruption training and reporting mechanisms"
+                    ],
+                    "investigative": [
+                        "Cross-reference financial records for signs of bribery",
+                        "Conduct interviews with whistleblowers or informants"
+                    ]
+                }
+            },
+            {
+                "task_id": "10.2",
+                "name": "Evasion Techniques During Arrest or Interrogation",
+                "description": "Using deception to mislead authorities.",
+                "framework_mappings": {
+                    "MITRE_ATT&CK": {
+                        "tactic": "TA0005 (Defense Evasion)",
+                        "technique": "T1564 (Hide Artifacts)"
+                    },
+                    "NIST_CSF": "RS.CO-3: Establish mechanisms for incident response and management.",
+                    "Diamond_Model": {
+                        "capability": "Deception Tactics",
+                        "adversary": "Avoiding capture through false information"
+                    }
+                },
+                "indicators_of_compromise": [
+                    "Conflicting statements or false information during interrogation",
+                    "Unusual legal maneuvers to avoid prosecution"
+                ],
+                "playbooks": {
+                    "offensive": [
+                        "Prepare false narratives to present during interrogation",
+                        "Leverage legal loopholes to delay or avoid charges"
+                    ],
+                    "defensive": [
+                        "Conduct thorough background checks to identify inconsistencies",
+                        "Utilize advanced interrogation techniques to counter deception"
+                    ],
+                    "investigative": [
+                        "Analyze discrepancies in suspect statements",
+                        "Coordinate with legal teams for enhanced case review"
+                    ]
+                }
+            }
+        ],
+        "HD4_Association": {
+            "phase": "Disrupt",
+            "definition": "Disrupting adversary engagement through law enforcement interactions."
+        },
+        "Kill_Chain_Association": {
+            "phase": "Actions on Objectives",
+            "definition": "The adversary uses law enforcement encounters to their advantage."
+        }
+    }
+}

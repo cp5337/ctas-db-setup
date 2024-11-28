@@ -1,0 +1,9 @@
+My apologies for the jigsaw puzzle. Please take a look at the information to create the nodes and relationships. There is a node schema that would be the metadata for each node. Note that I intend to use non-crypto hashing schema to offload some of this metadata into iceberg and likely use mongo as a metadata server. If you are interested this is where I could use some help. I am trying to pull this together in spare time so some help would be fantastic. 
+
+
+I put a script together to transform the v6 JSON to cypher. 
+
+The word document gives you the list of tasks that are nodes. The application for all of this is for a cybersecurity project that breaks down adversarial behavior into specific tasks. I had the nodes and relationships all set and loaded in neo4j. The DBMS got disrupted when I tried to revert to and earlier version of neo4j to use the semantic extension and I think I saved over the file rushing around. 
+
+Thank you so much for your help!!
+Charlie 
